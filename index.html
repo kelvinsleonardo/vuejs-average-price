@@ -31,8 +31,8 @@
       .average-price p {
         margin: 0px;
       }
-      .average-price h4 {
-        font-weigth: bold;
+      .average-price h1 {
+        font-weight: bold;
       }
 
       .list-group {
@@ -43,19 +43,16 @@
         margin-top: 20px;
       }
 
-      .title h2{
-        text-align:center;
+      .title h2 {
+        text-align: center;
         margin-bottom: 50px;
       }
-
     </style>
   </head>
 
   <body>
     <div id="app" class="container">
-      <div class="title">
-      <h2>Calculator Average Price</h2>
-      </div>
+      <div class="title"><h2>Calculator Average Price</h2></div>
       <div class="form-row">
         <div class="col">
           <input
@@ -87,7 +84,7 @@
 
       <div class="average-price">
         <p>Average Price</p>
-        <h1>{{ averagePrice }}</h4>
+        <h1>{{ averagePrice }}</h1>
       </div>
 
       <table class="table table-striped table-dark">
@@ -121,7 +118,7 @@
       new Vue({
         el: "#app",
         data: {
-          buys: [{ price: 1, amount: 1 }],
+          buys: [],
           price: "",
           amount: "",
           averagePrice: 0
@@ -129,8 +126,8 @@
         methods: {
           put: function(price, amount) {
             this.buys.push({ price: price, amount: amount });
-            this.price = '';
-            this.amount = '';
+            this.price = "";
+            this.amount = "";
             this.calc();
           },
           remove: function(index) {
