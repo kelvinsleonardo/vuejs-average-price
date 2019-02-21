@@ -11,13 +11,13 @@
       crossorigin="anonymous"
     />
     <link
-      href="https://fonts.googleapis.com/css?family=Montserrat"
+      href="https://fonts.googleapis.com/css?family=Lato|Poppins"
       rel="stylesheet"
     />
 
     <style>
       body {
-        font-family: "Montserrat", sans-serif;
+        font-family: "Poppins", sans-serif;
         margin-top: 20px;
       }
       .average-price {
@@ -60,6 +60,7 @@
             class="form-control"
             placeholder="Amount"
             v-model="amount"
+            v-on:keyup.enter.prevent="put(price, amount)"
           />
         </div>
         <div class="col">
@@ -68,6 +69,7 @@
             class="form-control"
             placeholder="Price"
             v-model="price"
+            v-on:keyup.enter.prevent="put(price, amount)"
           />
         </div>
         <div class="col">
@@ -77,7 +79,7 @@
             class="btn btn-primary"
             @click="put(price, amount)"
           >
-            Calculate
+            New buy
           </button>
         </div>
       </div>
@@ -91,7 +93,7 @@
         <thead class="thead-light">
           <tr>
             <th scope="col">Amount</th>
-            <th scope="col">Price</th>
+            <th scope="col">Price R$</th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -102,7 +104,7 @@
             <td>
               <button
                 type="button"
-                class="btn btn-secondary btn-sm"
+                class="btn btn-danger btn-sm"
                 @click="remove(index)"
               >
                 <i class="fas fa-trash-alt"></i>
@@ -125,10 +127,12 @@
         },
         methods: {
           put: function(price, amount) {
-            this.buys.push({ price: price, amount: amount });
-            this.price = "";
-            this.amount = "";
-            this.calc();
+            if (price && amount) {
+              this.buys.push({ price: price, amount: amount });
+              this.price = "";
+              this.amount = "";
+              this.calc();
+            }
           },
           remove: function(index) {
             this.buys.splice(index, 1);
