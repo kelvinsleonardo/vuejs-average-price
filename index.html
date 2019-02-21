@@ -1,0 +1,94 @@
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+      integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <body>
+    <div id="app" class="container">
+      <h3>Calculator Average Price</h3>
+      <div class="form-row">
+        <div class="col">
+          <input
+            type="number"
+            class="form-control"
+            placeholder="Amount"
+            v-model="amount"
+          />
+        </div>
+        <div class="col">
+          <input
+            type="number"
+            class="form-control"
+            placeholder="Price"
+            v-model="price"
+          />
+        </div>
+        <div class="col">
+          <button
+            type="button"
+            :disabled="!amount || !price"
+            class="btn btn-primary"
+            @click="put(price, amount)"
+          >
+            Calculate
+          </button>
+        </div>
+      </div>
+
+      <ul>
+        <li v-for="(buy, index) in buys">
+          Price: {{ buy.price }} Amount: {{ buy.amount }}
+          <button
+            type="button"
+            class="btn btn-secondary btn-sm"
+            @click="remove(index)"
+          >
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        </li>
+      </ul>
+
+      <h4 v-if="averagePrice">Average Price: {{ averagePrice }}</h4>
+    </div>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+      new Vue({
+        el: "#app",
+        data: { buys: [], price: "", amount: "", averagePrice: 0 },
+        methods: {
+          put: function(price, amount) {
+            this.buys.push({ price: price, amount: amount });
+            this.price = 0;
+            this.amount = 0;
+            this.calc();
+          },
+          remove: function(index) {
+            this.buys.splice(index, 1);
+            this.calc();
+          },
+          calc: function(e) {
+            var sumAmount = 0;
+            var sumCalcEl = 0;
+            this.buys.forEach(function(el) {
+              sumCalcEl += el.price * el.amount;
+              sumAmount += parseInt(el.amount);
+            });
+            this.averagePrice = sumCalcEl / sumAmount;
+          }
+        }
+      });
+    </script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  </body>
+</html>
